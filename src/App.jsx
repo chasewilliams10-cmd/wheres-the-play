@@ -151,19 +151,19 @@ const FORCE = [
     why: "The batter is forced to first every single time. Step on the bag, no tag needed." },
   // --- kid pitch: runners leave on the release, so there's no batted ball ---
   // and no force. This is the contrast that makes the whole rule click.
-  { bases: ["first"], base: "second", force: false, batted: false,
-    lead: "The runner on first takes off the moment the pitch leaves the pitcher's hand.",
+  { bases: ["first"], base: "second", force: false, batterRuns: false,
+    lead: "The runner on first leads off and breaks for second.",
     why: "Nobody hit the ball, so the batter never ran. If the batter isn't running, nothing is forced. A steal is a tag every single time." },
-  { bases: ["second"], base: "third", force: false, batted: false,
-    lead: "The runner on second breaks for third as the pitch is released.",
+  { bases: ["second"], base: "third", force: false, batterRuns: false,
+    lead: "The runner on second gets a big lead and takes off for third.",
     why: "No batted ball means no force anywhere. Catch it and put the glove down in front of the bag." },
-  { bases: ["third"], base: "home", force: false, batted: false,
+  { bases: ["third"], base: "home", force: false, batterRuns: false,
     lead: "The pitch skips past the catcher and the runner on third takes off.",
     why: "He's running on his own, not because anyone pushed him. Block the plate and tag him." },
-  { bases: ["first", "second"], base: "third", force: false, batted: false,
-    lead: "Both runners go on the pitch.",
+  { bases: ["first", "second"], base: "third", force: false, batterRuns: false,
+    lead: "Both runners take off on a double steal.",
     why: "Careful — on a GROUND BALL this exact setup is a force at third. On a steal it isn't, because the batter never ran. Same bases, different answer." },
-  { bases: ["first", "second", "third"], base: "home", force: false, batted: false,
+  { bases: ["first", "second", "third"], base: "home", force: false, batterRuns: false,
     lead: "The pitch gets away and the runner on third breaks for the plate.",
     why: "Bases loaded is a force at home only when the ball is put in play. Nobody hit this one, so you have to tag him." },
   { bases: ["third"], base: "first", force: true,
@@ -172,6 +172,24 @@ const FORCE = [
     why: "Ground ball means the batter is running. First is a force, same as always." },
   { bases: ["first", "second", "third"], base: "second", force: true,
     why: "Loaded bases on a batted ball — every runner ahead of the batter is forced. Step on second." },
+  // --- leadoffs are legal, so pickoffs are live ---
+  { bases: ["first"], base: "first", force: false, batterRuns: false,
+    lead: "The runner strays too far off first and the pitcher spins and throws over.",
+    why: "Look at the item above: same runner, same base, opposite answer. Nobody swung, so the batter isn't running and first isn't a force. Tag him." },
+  { bases: ["second"], base: "second", force: false, batterRuns: false,
+    lead: "The runner on second drifts off the bag and the catcher snaps a throw down.",
+    why: "No batted ball, no force. Catch it and sweep the tag back toward the bag." },
+
+  // --- dropped third strike: the batter becomes a runner, so first is live ---
+  { bases: [], base: "first", force: true,
+    lead: "Strike three skips past the catcher and the batter takes off for first.",
+    why: "The second that ball gets by, he stops being a batter and starts being a runner — and every batter-runner is forced to first. Tag him or beat him to the bag." },
+  { bases: ["second"], base: "first", force: true,
+    lead: "Strike three gets away. First base is open, so the batter can run.",
+    why: "First base is empty, so he's allowed to go. He's a runner now, which makes first a force. The throw beats him — no tag needed." },
+  { bases: ["first", "second", "third"], base: "first", force: true,
+    lead: "Two outs. Strike three gets by the catcher and the batter runs.",
+    why: "With two outs he can run even though first is occupied. He's a batter-runner, so first is a force — and a force out at first for the third out means no run counts." },
 ];
 
 /* ------------------------------------------------------------------
@@ -252,6 +270,10 @@ const FIELDER_XY = {
 };
 // Nudge each runner clear of the fielder standing nearest that bag.
 const RUNNER_OFFSET = { first: [8, 0], second: [-20, 14], third: [-8, 0] };
+// Leadoffs are legal, so on steals and pickoffs the runners are off the bag,
+// edging toward the next one — and the first baseman holds his man on.
+const LEADOFF_OFFSET = { first: [-21, -21], second: [-21, 21], third: [21, 21] };
+const HOLDING_FIRST = [300, 162];
 const INFIELD = ["P", "C", "1B", "2B", "SS", "3B"];
 const FIELDER_NAME = {
   P: "pitcher", C: "catcher", "1B": "first baseman",
@@ -296,8 +318,11 @@ function Ball({ x, y }) {
   );
 }
 
-function Field({ runners = [], ball, spot, pickable, onPick, picked, correct, alsoOk = [], reveal }) {
+function Field({ runners = [], ball, spot, pickable, onPick, picked, correct,
+                alsoOk = [], reveal, leadoff = false }) {
   const ballXY = spot || (ball && FIELDER_XY[ball] ? FIELDER_XY[ball] : null);
+  const offsets = leadoff ? LEADOFF_OFFSET : RUNNER_OFFSET;
+  const holding = leadoff && runners.includes("first");
 
   const baseNode = (name) => {
     const [x, y] = BASE_XY[name];
@@ -326,8 +351,8 @@ function Field({ runners = [], ball, spot, pickable, onPick, picked, correct, al
             fill={fill} stroke={C.night} strokeWidth="2"
           />
         )}
-        {on && <Runner x={x + (RUNNER_OFFSET[name] || [0, 0])[0]}
-                       y={y + (RUNNER_OFFSET[name] || [0, 0])[1]} />}
+        {on && <Runner x={x + (offsets[name] || [0, 0])[0]}
+                       y={y + (offsets[name] || [0, 0])[1]} />}
         {pickable && (
           <circle cx={x} cy={y} r="30" fill="transparent"
                   style={{ cursor: "pointer" }} onClick={() => onPick && onPick(name)} />
@@ -349,7 +374,7 @@ function Field({ runners = [], ball, spot, pickable, onPick, picked, correct, al
       <circle cx="200" cy="192" r="26" fill={C.clayLight} />
 
       {Object.keys(FIELDER_XY).map((k) => {
-        const [x, y] = FIELDER_XY[k];
+        const [x, y] = (holding && k === "1B") ? HOLDING_FIRST : FIELDER_XY[k];
         if (ball === k) return null;   // the ball takes this spot instead
         return (
           <g key={k} opacity={INFIELD.includes(k) ? 0.45 : 0.3}>
@@ -717,7 +742,7 @@ export default function App() {
       answer(isForce, { ok: isForce === s.force, partial: false, why: s.why,
                         correct: s.force ? "a force — the bag is enough"
                                          : "a tag — the bag does nothing here" });
-    fieldEl = <Field runners={s.bases} />;
+    fieldEl = <Field runners={s.bases} leadoff={s.batterRuns === false} />;
     promptEl = (
       <p style={prompt}>
         {s.lead || "Ground ball!"} You're covering{" "}

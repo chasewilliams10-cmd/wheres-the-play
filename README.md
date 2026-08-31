@@ -5,8 +5,7 @@ force vs. tag (ground balls and steals), and who covers which bag. You're on
 defense for three innings: every right call is an out, every wrong one lets a
 run score.
 
-Built for a league where runners can't lead off and can only steal once the
-ball has left the pitcher's hand.
+Built for a league that allows leadoffs, steals, and the dropped third strike.
 
 No accounts, no server, no data leaves the device. Best scores live in the
 browser's own storage. That's deliberate — collecting anything about a player
@@ -81,7 +80,8 @@ keep seeing the old version.
 All the baseball lives in three arrays at the top of `src/App.jsx`:
 
 - `PLAY` — where's the play (33 situations)
-- `FORCE` — force or tag (25 situations, including steals)
+- `FORCE` — force or tag (30 situations: ground balls, steals, pickoffs,
+  and dropped third strikes)
 - `COVER` — who covers (13 situations)
 
 Adding a scenario means adding one object to the right array. Nothing else to
@@ -89,11 +89,13 @@ touch. The rules of thumb the answers follow:
 
 - Under two outs, take the lead force. Settling for first is the wrong out.
 - With two outs, any force ends the inning — take the surest one.
-- A steal is never a force. The batter never ran, so nobody is forced.
+- A steal or pickoff is never a force. The batter never ran, so nobody is forced.
+- A dropped third strike IS a force at first — the batter became a runner. He
+  may only run if first base is open, or if there are two outs.
 
 ## Known limits
 
 - Scores are per-device. Clearing browser data clears them.
-- No dropped-third-strike scenarios yet — league rules vary.
 - No "who covers second on a steal" — the answer depends on batter handedness
   or on a team rule, so it isn't in here.
+- No pickoff-at-second or rundown scenarios yet.

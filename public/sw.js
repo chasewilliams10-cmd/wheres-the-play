@@ -1,6 +1,6 @@
 /* Minimal offline support — no build step, no dependency.
    Bump CACHE every time you deploy so old files get cleaned up. */
-const CACHE = "wtp-v1";
+const CACHE = "wtp-v2";
 
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(["/", "/manifest.webmanifest"])));

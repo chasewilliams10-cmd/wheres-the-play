@@ -12,17 +12,23 @@ three quiz modes: where the ball goes, force-vs-tag, and who covers which bag.
 No data leaves the device — deliberately, to stay clear of COPPA (players are
 under 13). Best scores persist only in `localStorage`.
 
-## Project layout is flat, not `src/` + `public/` as the README describes
+## Project layout matches the README: `src/` + `public/`
 
-The README documents a `src/App.jsx`, `src/main.jsx`, `public/sw.js` layout,
-but on disk every source file (`App.jsx`, `main.jsx`, `index.css`, `sw.js`,
-`manifest.webmanifest`, icons, `index.html`) sits flat at the repo root — there
-is no `src/` or `public/` directory. `index.html`'s script tag has been
-adjusted to `/main.jsx` (not `/src/main.jsx`) to match. `npm run build` and
-`npm run dev` both work against this flat layout as of this writing — verify
-with `npm run build` if you're unsure it still does. `files.zip` at the repo
-root holds a copy of the files in the README's original `src`/`public`
-layout, if that structure is ever wanted back.
+`App.jsx`, `main.jsx`, `index.css` live under `src/`; `sw.js`,
+`manifest.webmanifest`, and the icon PNGs live under `public/`; `index.html`
+stays at the repo root and points to `/src/main.jsx`. This split isn't
+cosmetic — Vite only copies `public/` contents into `dist/` verbatim and
+unhashed. The project briefly existed with everything flattened at the repo
+root (no `public/` dir), which built without error locally but silently
+dropped `sw.js` and the two large icon PNGs from the production build (Vite
+only rewrites/copies assets it can trace from `index.html`'s own tags, not
+paths referenced only inside `manifest.webmanifest`'s JSON or hardcoded inside
+`sw.js`). That broke offline support and "Add to Home Screen" icons in
+production while looking completely fine in `npm run dev`. If asset paths
+ever get reorganized again, rebuild with `npm run build` and check that
+`dist/sw.js`, `dist/manifest.webmanifest`, `dist/icon-512.png`, and
+`dist/icon-maskable-512.png` exist unhashed at the output root before trusting
+the deploy — a clean local build is not sufficient proof.
 
 ## Commands
 

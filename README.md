@@ -79,10 +79,11 @@ keep seeing the old version.
 
 All the baseball lives in three arrays at the top of `src/App.jsx`:
 
-- `PLAY` — where's the play (33 situations)
+- `PLAY` — where's the play (66 situations: every out/base combination for
+  each of the six infield positions)
 - `FORCE` — force or tag (30 situations: ground balls, steals, pickoffs,
   and dropped third strikes)
-- `COVER` — who covers (13 situations)
+- `COVER` — who covers (15 situations)
 
 Adding a scenario means adding one object to the right array. Nothing else to
 touch. The rules of thumb the answers follow:

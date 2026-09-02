@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 
 /* ------------------------------------------------------------------
    TYPE — condensed athletic display over a clean sporty text face.
@@ -37,78 +37,144 @@ const C = {
    answer = best play. alsoOk = defensible, gets partial credit.
 ------------------------------------------------------------------ */
 const PLAY = [
-  // --- no force ahead of first: the batter is the only play ---
-  { bases: [], outs: 0, f: "SS", answer: "first",
-    why: "Nobody on base. The only runner forced to go anywhere is the batter, and he has to reach first. Throw across." },
-  { bases: [], outs: 2, f: "3B", answer: "first",
-    why: "Long throw, but it's the only one. Take your time and make it a good one — the whole inning rides on it." },
-  { bases: ["second"], outs: 0, f: "SS", answer: "first",
+  // ---- P ----
+  { bases: ["first"], outs: 0, f: "P", answer: "second",
+    why: "The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position." },
+  { bases: ["second"], outs: 0, f: "P", answer: "first",
     why: "Nobody's on first, so the runner on second is NOT forced to third. Throw there and he just goes back. Take the out at first." },
-  { bases: ["second"], outs: 1, f: "3B", answer: "first",
-    why: "Look the runner back to second so he doesn't wander, then throw to first. He isn't forced — you'd have to tag him." },
-  { bases: ["second"], outs: 2, f: "2B", answer: "first",
-    why: "The batter is the only forced runner. Get him and you're off the field." },
-  { bases: ["third"], outs: 0, f: "SS", answer: "first",
+  { bases: ["third"], outs: 0, f: "P", answer: "first",
     why: "The runner on third isn't forced. Show him the ball to freeze him, then throw to first for the sure out." },
-  { bases: ["third"], outs: 1, f: "P", answer: "first",
-    why: "Check him back, then get the out. Without a force you'd have to tag him at the plate — too risky." },
-  { bases: ["third"], outs: 2, f: "SS", answer: "first",
-    why: "Two outs. Beat the batter to first and the run doesn't count, even if he crosses the plate first." },
-  { bases: ["second", "third"], outs: 0, f: "3B", answer: "first",
-    why: "First base is empty, so NEITHER runner is forced. The batter is the only one who has to run. Throw to first." },
-  { bases: ["second", "third"], outs: 1, f: "SS", answer: "first",
-    why: "No force anywhere but first. Look the runner back, then make the throw." },
-
-  // --- lead force available, under two outs: taking first is the wrong out ---
-  { bases: ["first"], outs: 0, f: "SS", answer: "second",
-    why: "The runner on first HAS to run, so second is a force. Get the lead runner — first base is the easy out, not the right one." },
-  { bases: ["first"], outs: 0, f: "2B", answer: "second",
-    why: "You're closest to the bag. Flip to the shortstop covering second for the force, then he throws on to first." },
-  { bases: ["first"], outs: 1, f: "SS", answer: "second",
-    why: "Still a force at second. Take the runner closest to scoring every time you can." },
-  { bases: ["first"], outs: 1, f: "3B", answer: "second",
-    why: "Throw to second for the lead out and you might still get the batter at first. That's the whole point of a force." },
-  { bases: ["first", "second"], outs: 0, f: "3B", answer: "third", alsoOk: ["second"],
-    why: "Both runners are forced now. You're standing right beside the bag — step on third. No throw, no risk, lead runner gone." },
-  { bases: ["first", "second"], outs: 0, f: "SS", answer: "second", alsoOk: ["third"],
-    why: "Everyone ahead of the batter is forced. Second is the closest lead out and it starts a double play." },
-  { bases: ["first", "second"], outs: 1, f: "2B", answer: "second", alsoOk: ["third"],
-    why: "Force at second, and you're right there. Throwing to first would leave two runners in scoring position." },
-  { bases: ["first", "second"], outs: 1, f: "P", answer: "second", alsoOk: ["third"],
-    why: "Comebacker with a force at second. Spin and get the lead runner — the batter is the least dangerous man on the field." },
-  { bases: ["first", "third"], outs: 0, f: "SS", answer: "second",
-    why: "The runner on first is forced, so second is live. Go get two. Early in the inning, outs are worth more than the run from third." },
-  { bases: ["first", "third"], outs: 1, f: "2B", answer: "second",
-    why: "Force at second. Take the lead runner and you're one out from being done, instead of leaving two men on." },
-  { bases: ["first", "second", "third"], outs: 0, f: "C", answer: "home",
-    why: "Bases loaded means EVERY runner is forced — even the one at third. Step on the plate. Any other base is still an out, but the run scores anyway." },
   { bases: ["first", "second", "third"], outs: 0, f: "P", answer: "home",
-    why: "Shortest throw, lead runner, and it's the only one that keeps the run off the board. Turn and fire to the catcher." },
-  { bases: ["first", "second", "third"], outs: 1, f: "SS", answer: "second", alsoOk: ["home"],
-    why: "Everybody's forced. Second is the closest lead out and it starts the double play that ends the inning." },
-  { bases: ["first", "second", "third"], outs: 1, f: "3B", answer: "third", alsoOk: ["home"],
-    why: "Step on third. It's a force, it's an out, and you never had to throw the ball." },
-  { bases: ["first", "second", "third"], outs: 1, f: "2B", answer: "second", alsoOk: ["home"],
-    why: "You're standing next to the bag with a force. Step on it, then look to double up the batter." },
-
-  { bases: ["first", "second"], outs: 0, f: "P", answer: "third", alsoOk: ["second"],
-    why: "Both lead runners are forced. Third is the farthest one you can still get, and it wipes out the runner in scoring position." },
-  { bases: ["second", "third"], outs: 2, f: "3B", answer: "first",
-    why: "Two outs, no force anywhere but first. Make the throw and neither run counts." },
+    why: "Bases loaded, nobody out. Home is a force, and home-to-first is still a double play — the only choice that gets both outs AND keeps the run off the board." },
+  { bases: ["first", "second", "third"], outs: 1, f: "P", answer: "home", alsoOk: ["second"],
+    why: "Everybody's forced. Home then first ends the inning with nothing scoring. Second then first works too — when the last out is a force at first, no run counts." },
+  { bases: ["first", "third"], outs: 1, f: "P", answer: "second",
+    why: "The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position." },
+  { bases: ["second"], outs: 1, f: "P", answer: "first",
+    why: "Nobody's on first, so the runner on second is NOT forced to third. Throw there and he just goes back. Take the out at first." },
+  { bases: ["first", "second"], outs: 1, f: "P", answer: "second", alsoOk: ["third"],
+    why: "Third is a force too, but from where you're standing the surest double play is second and then first. A double play beats one out at third." },
+  { bases: ["first"], outs: 2, f: "P", answer: "first", alsoOk: ["second"],
+    why: "Two outs — any force ends the inning. Take the surest out you've got instead of chasing the lead runner." },
+  { bases: ["second"], outs: 2, f: "P", answer: "first",
+    why: "Two outs. The batter is the only forced runner — get him and you're off the field." },
+  { bases: ["third"], outs: 2, f: "P", answer: "first",
+    why: "Two outs. Beat the batter to first and the run doesn't count, even if he crosses the plate first." },
+  // ---- C ----
+  { bases: ["second"], outs: 0, f: "C", answer: "first",
+    why: "Nobody's on first, so the runner on second is NOT forced to third. Throw there and he just goes back. Take the out at first." },
+  { bases: ["first"], outs: 0, f: "C", answer: "second",
+    why: "The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position." },
+  { bases: ["first", "third"], outs: 0, f: "C", answer: "second",
+    why: "The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position." },
+  { bases: ["first", "second", "third"], outs: 0, f: "C", answer: "home",
+    why: "Bases loaded, nobody out. Home is a force, and home-to-first is still a double play — the only choice that gets both outs AND keeps the run off the board." },
+  { bases: ["second"], outs: 1, f: "C", answer: "first",
+    why: "Nobody's on first, so the runner on second is NOT forced to third. Throw there and he just goes back. Take the out at first." },
+  { bases: ["first", "third"], outs: 1, f: "C", answer: "second",
+    why: "The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position." },
+  { bases: ["first", "second", "third"], outs: 1, f: "C", answer: "home",
+    why: "Everybody's forced. Home then first ends the inning with nothing scoring. Second then first works too — when the last out is a force at first, no run counts." },
+  { bases: ["first"], outs: 1, f: "C", answer: "second",
+    why: "The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position." },
+  { bases: ["third"], outs: 2, f: "C", answer: "first",
+    why: "Two outs. Beat the batter to first and the run doesn't count, even if he crosses the plate first." },
+  { bases: ["second", "third"], outs: 2, f: "C", answer: "first",
+    why: "Two outs and no force anywhere but first. Make the throw and neither run counts." },
+  { bases: [], outs: 2, f: "C", answer: "first",
+    why: "Empty bases, two outs. One throw ends it — set your feet and make it a good one." },
+  // ---- 1B ----
+  { bases: ["first", "second"], outs: 0, f: "1B", answer: "second",
+    why: "Third is a force too, but from where you're standing the surest double play is second and then first. A double play beats one out at third." },
+  { bases: ["third"], outs: 0, f: "1B", answer: "first",
+    why: "The runner on third isn't forced. Show him the ball to freeze him, then throw to first for the sure out." },
+  { bases: ["first", "second", "third"], outs: 0, f: "1B", answer: "home",
+    why: "Bases loaded, nobody out. Home is a force, and home-to-first is still a double play — the only choice that gets both outs AND keeps the run off the board." },
+  { bases: ["first", "third"], outs: 0, f: "1B", answer: "second",
+    why: "The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position." },
+  { bases: ["first", "second"], outs: 1, f: "1B", answer: "second",
+    why: "Third is a force too, but from where you're standing the surest double play is second and then first. A double play beats one out at third." },
+  { bases: ["second"], outs: 1, f: "1B", answer: "first",
+    why: "Nobody's on first, so the runner on second is NOT forced to third. Throw there and he just goes back. Take the out at first." },
+  { bases: ["first", "third"], outs: 1, f: "1B", answer: "second",
+    why: "The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position." },
   { bases: ["third"], outs: 1, f: "1B", answer: "first",
-    why: "Step on the bag yourself. The runner on third isn't forced, so there's nothing at home for you." },
-
-  // --- two outs: any force ends the inning, so take the surest one ---
-  { bases: ["first"], outs: 2, f: "SS", answer: "first", alsoOk: ["second"],
-    why: "Two outs — any force ends it. Take the surest out. If you're standing on second, use it, but first is the safe call." },
-  { bases: ["first"], outs: 2, f: "1B", answer: "first",
-    why: "Don't throw it anywhere. Step on the bag yourself. Inning over." },
-  { bases: ["first", "second"], outs: 2, f: "2B", answer: "first", alsoOk: ["second", "third"],
-    why: "Two outs and three forces available. Pick the one you'll definitely make — usually first." },
-  { bases: ["first", "third"], outs: 2, f: "SS", answer: "first", alsoOk: ["second"],
-    why: "Two outs. Get the batter at first and the inning ends before that run from third counts." },
+    why: "The runner on third isn't forced. Show him the ball to freeze him, then throw to first for the sure out." },
+  { bases: [], outs: 2, f: "1B", answer: "first",
+    why: "Two outs. Don't throw it anywhere — step on the bag yourself and walk off." },
+  { bases: ["first", "second"], outs: 2, f: "1B", answer: "first", alsoOk: ["second", "third"],
+    why: "Two outs. Don't throw it anywhere — step on the bag yourself and walk off." },
+  { bases: ["first", "third"], outs: 2, f: "1B", answer: "first", alsoOk: ["second"],
+    why: "Two outs. Don't throw it anywhere — step on the bag yourself and walk off." },
+  // ---- 2B ----
+  { bases: ["first", "second", "third"], outs: 0, f: "2B", answer: "home",
+    why: "Bases loaded, nobody out. Home is a force, and home-to-first is still a double play — the only choice that gets both outs AND keeps the run off the board." },
+  { bases: ["first", "second"], outs: 0, f: "2B", answer: "second",
+    why: "Third is a force too, but from where you're standing the surest double play is second and then first. A double play beats one out at third." },
+  { bases: ["second", "third"], outs: 0, f: "2B", answer: "first",
+    why: "First base is empty, so NEITHER runner is forced. The batter is the only one who has to run." },
+  { bases: ["first", "third"], outs: 0, f: "2B", answer: "second",
+    why: "The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position." },
+  { bases: [], outs: 1, f: "2B", answer: "first",
+    why: "Nobody on base. The only runner forced to go anywhere is the batter. Throw to first." },
+  { bases: ["first", "third"], outs: 1, f: "2B", answer: "second",
+    why: "The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position." },
+  { bases: ["third"], outs: 1, f: "2B", answer: "first",
+    why: "The runner on third isn't forced. Show him the ball to freeze him, then throw to first for the sure out." },
+  { bases: ["first", "second"], outs: 1, f: "2B", answer: "second",
+    why: "Third is a force too, but from where you're standing the surest double play is second and then first. A double play beats one out at third." },
+  { bases: ["second", "third"], outs: 2, f: "2B", answer: "first",
+    why: "Two outs and no force anywhere but first. Make the throw and neither run counts." },
   { bases: ["first", "second", "third"], outs: 2, f: "2B", answer: "first", alsoOk: ["second", "third", "home"],
-    why: "Two outs, bases loaded, four forces to choose from. Take the one you can't miss." },
+    why: "Two outs — any force ends the inning. Take the surest out you've got instead of chasing the lead runner." },
+  { bases: ["third"], outs: 2, f: "2B", answer: "first",
+    why: "Two outs. Beat the batter to first and the run doesn't count, even if he crosses the plate first." },
+  // ---- SS ----
+  { bases: ["second", "third"], outs: 0, f: "SS", answer: "first",
+    why: "First base is empty, so NEITHER runner is forced. The batter is the only one who has to run." },
+  { bases: ["first", "third"], outs: 0, f: "SS", answer: "second",
+    why: "The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position." },
+  { bases: ["first"], outs: 0, f: "SS", answer: "second",
+    why: "The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position." },
+  { bases: ["first", "second", "third"], outs: 0, f: "SS", answer: "home",
+    why: "Bases loaded, nobody out. Home is a force, and home-to-first is still a double play — the only choice that gets both outs AND keeps the run off the board." },
+  { bases: ["first", "third"], outs: 1, f: "SS", answer: "second",
+    why: "The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position." },
+  { bases: ["first", "second", "third"], outs: 1, f: "SS", answer: "home", alsoOk: ["second"],
+    why: "Everybody's forced. Home then first ends the inning with nothing scoring. Second then first works too — when the last out is a force at first, no run counts." },
+  { bases: ["first", "second"], outs: 1, f: "SS", answer: "second", alsoOk: ["third"],
+    why: "Third is a force too, but from where you're standing the surest double play is second and then first. A double play beats one out at third." },
+  { bases: ["second"], outs: 1, f: "SS", answer: "first",
+    why: "Nobody's on first, so the runner on second is NOT forced to third. Throw there and he just goes back. Take the out at first." },
+  { bases: ["second", "third"], outs: 2, f: "SS", answer: "first",
+    why: "Two outs and no force anywhere but first. Make the throw and neither run counts." },
+  { bases: ["first", "second"], outs: 2, f: "SS", answer: "first", alsoOk: ["second", "third"],
+    why: "Two outs — any force ends the inning. Take the surest out you've got instead of chasing the lead runner." },
+  { bases: [], outs: 2, f: "SS", answer: "first",
+    why: "Empty bases, two outs. One throw ends it — set your feet and make it a good one." },
+  // ---- 3B ----
+  { bases: ["first"], outs: 0, f: "3B", answer: "second",
+    why: "The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position." },
+  { bases: ["first", "second"], outs: 0, f: "3B", answer: "third", alsoOk: ["second"],
+    why: "Both lead runners are forced and the bag is right there. Step on third — no throw at all, and the runner closest to scoring is gone." },
+  { bases: ["first", "second", "third"], outs: 0, f: "3B", answer: "home",
+    why: "Bases loaded, nobody out. Home is a force, and home-to-first is still a double play — the only choice that gets both outs AND keeps the run off the board." },
+  { bases: ["second"], outs: 0, f: "3B", answer: "first",
+    why: "Nobody's on first, so the runner on second is NOT forced to third. Throw there and he just goes back. Take the out at first." },
+  { bases: ["first", "second"], outs: 1, f: "3B", answer: "third", alsoOk: ["second"],
+    why: "Both lead runners are forced and the bag is right there. Step on third — no throw at all, and the runner closest to scoring is gone." },
+  { bases: ["first", "second", "third"], outs: 1, f: "3B", answer: "home", alsoOk: ["second"],
+    why: "Everybody's forced. Home then first ends the inning with nothing scoring. Second then first works too — when the last out is a force at first, no run counts." },
+  { bases: ["second", "third"], outs: 1, f: "3B", answer: "first",
+    why: "First base is empty, so NEITHER runner is forced. The batter is the only one who has to run." },
+  { bases: ["first", "third"], outs: 1, f: "3B", answer: "second",
+    why: "The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position." },
+  { bases: ["first", "third"], outs: 2, f: "3B", answer: "first", alsoOk: ["second"],
+    why: "Two outs — any force ends the inning. Take the surest out you've got instead of chasing the lead runner." },
+  { bases: ["second"], outs: 2, f: "3B", answer: "first",
+    why: "Two outs. The batter is the only forced runner — get him and you're off the field." },
+  { bases: ["first", "second", "third"], outs: 2, f: "3B", answer: "third", alsoOk: ["first", "second", "home"],
+    why: "Two outs and a force bag is right under your foot. Don't throw it — step on third and the inning's over." },
 ];
 
 /* ------------------------------------------------------------------
@@ -145,49 +211,51 @@ const FORCE = [
     why: "One runner, and nobody behind him. He's running because he chose to. Tag him at the plate." },
   { bases: ["first", "second"], base: "home", force: false,
     why: "Third base is empty, so nobody is forced to score. The runner from second is going on his own — tag him." },
-  { bases: ["first", "second", "third"], base: "third", force: true,
-    why: "Loaded bases means every base is a force. Step on the bag and go." },
+  { bases: ["first", "second", "third"], base: "third", force: true, outs: 2,
+    lead: "Two outs. Ground ball with the bases loaded.",
+    why: "Loaded bases means every base is a force, third included. Two outs, so any of them ends it — step on the bag." },
   { bases: ["first"], base: "first", force: true,
     why: "The batter is forced to first every single time. Step on the bag, no tag needed." },
   // --- kid pitch: runners leave on the release, so there's no batted ball ---
   // and no force. This is the contrast that makes the whole rule click.
-  { bases: ["first"], base: "second", force: false, batterRuns: false,
+  { bases: ["first"], base: "second", force: false, batterRuns: false, kidPitch: true,
     lead: "The runner on first leads off and breaks for second.",
     why: "Nobody hit the ball, so the batter never ran. If the batter isn't running, nothing is forced. A steal is a tag every single time." },
-  { bases: ["second"], base: "third", force: false, batterRuns: false,
+  { bases: ["second"], base: "third", force: false, batterRuns: false, kidPitch: true,
     lead: "The runner on second gets a big lead and takes off for third.",
     why: "No batted ball means no force anywhere. Catch it and put the glove down in front of the bag." },
-  { bases: ["third"], base: "home", force: false, batterRuns: false,
+  { bases: ["third"], base: "home", force: false, batterRuns: false, kidPitch: true,
     lead: "The pitch skips past the catcher and the runner on third takes off.",
     why: "He's running on his own, not because anyone pushed him. Block the plate and tag him." },
-  { bases: ["first", "second"], base: "third", force: false, batterRuns: false,
+  { bases: ["first", "second"], base: "third", force: false, batterRuns: false, kidPitch: true,
     lead: "Both runners take off on a double steal.",
     why: "Careful — on a GROUND BALL this exact setup is a force at third. On a steal it isn't, because the batter never ran. Same bases, different answer." },
-  { bases: ["first", "second", "third"], base: "home", force: false, batterRuns: false,
+  { bases: ["first", "second", "third"], base: "home", force: false, batterRuns: false, kidPitch: true,
     lead: "The pitch gets away and the runner on third breaks for the plate.",
     why: "Bases loaded is a force at home only when the ball is put in play. Nobody hit this one, so you have to tag him." },
   { bases: ["third"], base: "first", force: true,
     why: "The batter has to run no matter who else is on. First base is always a force." },
   { bases: ["first", "second"], base: "first", force: true,
     why: "Ground ball means the batter is running. First is a force, same as always." },
-  { bases: ["first", "second", "third"], base: "second", force: true,
-    why: "Loaded bases on a batted ball — every runner ahead of the batter is forced. Step on second." },
+  { bases: ["first", "second", "third"], base: "second", force: true, outs: 2,
+    lead: "Two outs. Ground ball with the bases juiced.",
+    why: "Every runner ahead of the batter is forced, so second is a force and it ends the inning. With fewer outs you'd want the ball going home instead — but with two outs, any force does it." },
   // --- leadoffs are legal, so pickoffs are live ---
-  { bases: ["first"], base: "first", force: false, batterRuns: false,
+  { bases: ["first"], base: "first", force: false, batterRuns: false, kidPitch: true,
     lead: "The runner strays too far off first and the pitcher spins and throws over.",
     why: "Look at the item above: same runner, same base, opposite answer. Nobody swung, so the batter isn't running and first isn't a force. Tag him." },
-  { bases: ["second"], base: "second", force: false, batterRuns: false,
+  { bases: ["second"], base: "second", force: false, batterRuns: false, kidPitch: true,
     lead: "The runner on second drifts off the bag and the catcher snaps a throw down.",
     why: "No batted ball, no force. Catch it and sweep the tag back toward the bag." },
 
   // --- dropped third strike: the batter becomes a runner, so first is live ---
-  { bases: [], base: "first", force: true,
+  { bases: [], base: "first", force: true, kidPitch: true,
     lead: "Strike three skips past the catcher and the batter takes off for first.",
     why: "The second that ball gets by, he stops being a batter and starts being a runner — and every batter-runner is forced to first. Tag him or beat him to the bag." },
-  { bases: ["second"], base: "first", force: true,
+  { bases: ["second"], base: "first", force: true, kidPitch: true,
     lead: "Strike three gets away. First base is open, so the batter can run.",
     why: "First base is empty, so he's allowed to go. He's a runner now, which makes first a force. The throw beats him — no tag needed." },
-  { bases: ["first", "second", "third"], base: "first", force: true,
+  { bases: ["first", "second", "third"], base: "first", force: true, kidPitch: true, outs: 2,
     lead: "Two outs. Strike three gets by the catcher and the batter runs.",
     why: "With two outs he can run even though first is occupied. He's a batter-runner, so first is a force — and a force out at first for the third out means no run counts." },
 ];
@@ -212,7 +280,7 @@ const COVER = [
     bases: [], ball: "C",
     options: ["Second baseman", "Shortstop", "Pitcher", "Left fielder"], answer: 0,
     why: "The first baseman charged in for the bunt, so the second baseman sprints over to take the throw." },
-  { q: "Runner on first takes off to steal. Who backs up the throw in case it gets past second?",
+  { kidPitch: true, q: "Runner on first takes off to steal. Who backs up the throw in case it gets past second?",
     bases: ["first"], spot: [200, 306],
     options: ["Center fielder", "Pitcher", "Left fielder", "Third baseman"], answer: 0,
     why: "The center fielder charges in behind the bag. If it skips through, he keeps the runner from getting third." },
@@ -232,22 +300,30 @@ const COVER = [
     bases: [], spot: [268, 113],
     options: ["Right fielder", "Second baseman", "First baseman", "Pitcher"], answer: 0,
     why: "An outfielder running in always beats an infielder running out. He can see the whole play in front of him." },
-  { q: "Pitch gets past the catcher with a runner on third. Who covers home plate?",
+  { kidPitch: true, q: "Pitch gets past the catcher with a runner on third. Who covers home plate?",
     bases: ["third"], spot: [224, 324],
     options: ["Pitcher", "First baseman", "Third baseman", "Shortstop"], answer: 0,
     why: "The catcher is chasing the ball, so the pitcher sprints in to cover the plate and take the throw." },
-  { q: "Runner on second takes off for third as the pitch is released. Who covers third base?",
+  { kidPitch: true, q: "Runner on second takes off for third as the pitch is released. Who covers third base?",
     bases: ["second"], spot: [200, 306],
     options: ["Third baseman", "Shortstop", "Pitcher", "Left fielder"], answer: 0,
     why: "The third baseman stays on his own bag for a steal. He's the closest man and he already knows where the bag is without looking." },
-  { q: "Runner steals second and the catcher's throw skips past the bag. Where should the pitcher be?",
+  { kidPitch: true, q: "Runner steals second and the catcher's throw skips past the bag. Where should the pitcher be?",
     bases: ["first"], spot: [200, 306],
     options: ["Backing up third base", "Covering second base", "Covering home", "Still on the mound"], answer: 0,
     why: "If the throw gets away, that runner is going to third. The pitcher's job on every steal is to get behind third and keep him from scoring." },
-  { q: "Runner on second breaks for third on the pitch. Who backs up the throw to third?",
+  { kidPitch: true, q: "Runner on second breaks for third on the pitch. Who backs up the throw to third?",
     bases: ["second"], spot: [200, 306],
     options: ["Left fielder", "Center fielder", "Pitcher", "Second baseman"], answer: 0,
     why: "Left field is directly behind third. He charges in so an overthrow doesn't turn into a run." },
+  { q: "Ground ball to the second baseman with nobody on base. Who covers first?",
+    bases: [], ball: "2B",
+    options: ["First baseman", "Pitcher", "Shortstop", "Catcher"], answer: 0,
+    why: "He's already standing there. The pitcher only comes over when the ball pulls the first baseman off the bag." },
+  { q: "Base hit over the shortstop into left field. Who is the cutoff man for a throw to third?",
+    bases: [], ball: "LF",
+    options: ["Shortstop", "Second baseman", "Pitcher", "Third baseman"], answer: 0,
+    why: "The shortstop goes out to meet the throw. The third baseman has to stay home on his bag or there's nobody to catch it." },
 ];
 
 /* ------------------------------------------------------------------
@@ -479,31 +555,44 @@ function Scoreboard({ inning, outs, runs, streak }) {
 ------------------------------------------------------------------ */
 const MODES = {
   play: { title: "Where's the Play?", blurb: "A ball is hit to you. Where does it go?", bank: PLAY },
-  force: { title: "Force or Tag?", blurb: "Ground balls and steals. Bag or tag?", bank: FORCE },
+  force: { title: "Force or Tag?", blurb: "Bag or tag?", bank: FORCE },
   cover: { title: "Who Covers?", blurb: "Everybody has a job on every pitch. Know yours.", bank: COVER },
 };
+const BUILD = "build 3";   // bump this and CACHE in public/sw.js on every deploy
 const INNINGS = 3;
 const MERCY = 10; // runs allowed before we call it
+const POSITIONS = ["any", "P", "C", "1B", "2B", "SS", "3B"];
+const LEVELS = { "8u": "8U Coach Pitch", "10u": "10U Kid Pitch" };
 
-// Cover-mode banks list the right answer first for readability, so scramble
-// the choices — otherwise the position gives it away every time.
-function buildDeck(m) {
-  const bank =
-    m === "cover"
-      ? MODES[m].bank.map((q) => {
-          const right = q.options[q.answer];
-          const opts = shuffle(q.options);
-          return { ...q, options: opts, answer: opts.indexOf(right) };
-        })
-      : MODES[m].bank;
+// Coach pitch has no leadoffs, no steals and no dropped third strikes, so
+// anything tagged kidPitch is filtered out at 8U.
+function buildDeck(m, level, position) {
+  let bank = MODES[m].bank;
+  if (level === "8u") bank = bank.filter((s) => !s.kidPitch);
+  if (m === "play" && position !== "any") {
+    const only = bank.filter((s) => s.f === position);
+    if (only.length >= 6) bank = only;   // don't narrow into a pool too small to draw from
+  }
+  if (m === "cover") {
+    // Banks list the right answer first for readability — scramble the
+    // choices so the position never gives it away.
+    bank = bank.map((q) => {
+      const right = q.options[q.answer];
+      const opts = shuffle(q.options);
+      return { ...q, options: opts, answer: opts.indexOf(right) };
+    });
+  }
   return shuffle(bank);
 }
 
 export default function App() {
   const [screen, setScreen] = useState("menu");
   const [mode, setMode] = useState("play");
+  const [level, setLevel] = useState("10u");
+  const [position, setPosition] = useState("any");
   const [deck, setDeck] = useState([]);
-  const [idx, setIdx] = useState(0);
+  const [cur, setCur] = useState(null);
+  const [qnum, setQnum] = useState(0);
   const [inning, setInning] = useState(1);
   const [outs, setOuts] = useState(0);
   const [runs, setRuns] = useState(0);
@@ -512,6 +601,7 @@ export default function App() {
   const [picked, setPicked] = useState(null);
   const [result, setResult] = useState(null);
   const [records, setRecords] = useState({});
+  const usedRef = useRef(new Set());
 
   useEffect(() => {
     if (document.getElementById("wtp-fonts")) return;
@@ -526,28 +616,51 @@ export default function App() {
     try {
       const raw = localStorage.getItem("wtp.bestScores");
       if (raw) setRecords(JSON.parse(raw));
+      const lv = localStorage.getItem("wtp.level");
+      if (lv && LEVELS[lv]) setLevel(lv);
+      const ps = localStorage.getItem("wtp.position");
+      if (ps && POSITIONS.includes(ps)) setPosition(ps);
     } catch {
-      /* private browsing or storage disabled — scores just won't persist */
+      /* private browsing or storage disabled — settings just won't persist */
     }
   }, []);
 
-  const saveRecord = useCallback((m, r) => {
-    const prev = records[m];
+  const remember = (k, v) => { try { localStorage.setItem(k, v); } catch { /* ignore */ } };
+
+  const saveRecord = useCallback((key, r) => {
+    const prev = records[key];
     if (prev !== undefined && prev <= r) return;
-    const next = { ...records, [m]: r };
+    const next = { ...records, [key]: r };
     setRecords(next);
     try { localStorage.setItem("wtp.bestScores", JSON.stringify(next)); } catch { /* ignore */ }
   }, [records]);
 
+  /* Draw a scenario that matches the out count actually showing on the
+     scoreboard. Scenarios whose wording depends on the outs carry an `outs`
+     field; the rest fit any count. This is what keeps a prompt from saying
+     "two outs" while the board shows none. */
+  const drawFor = useCallback((d, outsNow) => {
+    const eligible = [];
+    d.forEach((s, i) => { if (s.outs === undefined || s.outs === outsNow) eligible.push(i); });
+    if (!eligible.length) return null;
+    let pool = eligible.filter((i) => !usedRef.current.has(i));
+    if (!pool.length) { usedRef.current = new Set(); pool = eligible; }
+    const i = pool[Math.floor(Math.random() * pool.length)];
+    usedRef.current.add(i);
+    return d[i];
+  }, []);
+
   const start = (m) => {
-    setMode(m);
-    setDeck(buildDeck(m));
-    setIdx(0); setInning(1); setOuts(0); setRuns(0);
+    const d = buildDeck(m, level, position);
+    usedRef.current = new Set();
+    setMode(m); setDeck(d);
+    setInning(1); setOuts(0); setRuns(0);
     setStreak(0); setBestStreak(0); setPicked(null); setResult(null);
+    setQnum(0); setCur(drawFor(d, 0));
     setScreen("game");
   };
 
-  const s = deck[idx % (deck.length || 1)];
+  const s = cur;
 
   const answer = (choice, verdict) => {
     if (result) return;
@@ -568,16 +681,11 @@ export default function App() {
     if (result.ok) o += 1;
     if (o >= 3) { o = 0; i += 1; }
     setPicked(null); setResult(null);
-    if (runs >= MERCY) { saveRecord(mode, runs); setScreen("over"); return; }
-    if (i > INNINGS) {
-      saveRecord(mode, runs);
-      setScreen("over");
-      return;
-    }
+    if (runs >= MERCY) { saveRecord(`${level}:${mode}`, runs); setScreen("over"); return; }
+    if (i > INNINGS) { saveRecord(`${level}:${mode}`, runs); setScreen("over"); return; }
     setOuts(o); setInning(i);
-    const n = idx + 1;
-    if (n >= deck.length) { setDeck(buildDeck(mode)); setIdx(0); }
-    else setIdx(n);
+    setQnum((q) => q + 1);
+    setCur(drawFor(deck, o));
   };
 
   /* ---------- shared styles ---------- */
@@ -634,7 +742,40 @@ export default function App() {
             </p>
           </div>
 
-          <div style={{ display: "grid", gap: 12, marginTop: 24 }}>
+          <div style={{ marginTop: 22 }}>
+            <div style={{ fontSize: 10.5, letterSpacing: "0.2em", fontWeight: 900,
+                          color: "rgba(251,247,236,0.45)", marginBottom: 7 }}>LEVEL</div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+              {Object.entries(LEVELS).map(([k, label]) => (
+                <button key={k} onClick={() => { setLevel(k); remember("wtp.level", k); }}
+                  style={{ ...btn, fontSize: 15, padding: "11px 6px",
+                           background: level === k ? C.red : C.panel,
+                           borderColor: level === k ? C.red : "rgba(251,247,236,0.22)" }}>
+                  {label}
+                </button>
+              ))}
+            </div>
+
+            <div style={{ fontSize: 10.5, letterSpacing: "0.2em", fontWeight: 900,
+                          color: "rgba(251,247,236,0.45)", margin: "16px 0 7px" }}>
+              MY POSITION <span style={{ letterSpacing: 0, fontWeight: 700,
+                                         textTransform: "none", opacity: 0.75 }}>
+                — changes Where&rsquo;s the Play only</span>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 7 }}>
+              {POSITIONS.map((k) => (
+                <button key={k} onClick={() => { setPosition(k); remember("wtp.position", k); }}
+                  style={{ ...btn, fontSize: 15, padding: "10px 4px",
+                           background: position === k ? C.bulb : C.panel,
+                           color: position === k ? C.night : C.chalk,
+                           borderColor: position === k ? C.bulb : "rgba(251,247,236,0.22)" }}>
+                  {k === "any" ? "ALL" : k}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div style={{ display: "grid", gap: 12, marginTop: 22 }}>
             {Object.entries(MODES).map(([k, m]) => (
               <button key={k} onClick={() => start(k)}
                 style={{ ...btn, textAlign: "left", padding: "16px 18px", borderColor: "rgba(243,239,226,0.22)" }}>
@@ -643,10 +784,10 @@ export default function App() {
                               color: "rgba(243,239,226,0.65)", marginTop: 4, letterSpacing: 0 }}>
                   {m.blurb}
                 </div>
-                {records[k] !== undefined && (
+                {records[`${level}:${k}`] !== undefined && (
                   <div style={{ fontFamily: F.body, fontSize: 12, fontWeight: 700,
                                 color: C.bulb, marginTop: 6, letterSpacing: 0 }}>
-                    Best: {records[k]} run{records[k] === 1 ? "" : "s"} allowed
+                    Best: {records[`${level}:${k}`]} run{records[`${level}:${k}`] === 1 ? "" : "s"} allowed
                   </div>
                 )}
               </button>
@@ -656,6 +797,9 @@ export default function App() {
           <div style={{ textAlign: "center", marginTop: 26, fontSize: 11,
                         letterSpacing: "0.06em", color: "rgba(251,247,236,0.35)" }}>
             &copy; {new Date().getFullYear()} Chase Williams
+            <span style={{ opacity: 0.6 }}>
+              {" · "}{BUILD} · {PLAY.length + FORCE.length + COVER.length} situations
+            </span>
           </div>
         </div>
       </div>
@@ -786,8 +930,15 @@ export default function App() {
       <div style={{ maxWidth: 460, margin: "0 auto" }}>
         <div style={{ display: "flex", justifyContent: "space-between",
                       alignItems: "center", marginBottom: 8 }}>
-          <div style={{ fontFamily: F.display, fontSize: 20, letterSpacing: "0.04em" }}>
-            {MODES[mode].title.toUpperCase()}
+          <div>
+            <div style={{ fontFamily: F.display, fontSize: 20, letterSpacing: "0.04em" }}>
+              {MODES[mode].title.toUpperCase()}
+            </div>
+            <div style={{ fontSize: 10.5, letterSpacing: "0.14em", fontWeight: 800,
+                          color: "rgba(251,247,236,0.45)", marginTop: 1 }}>
+              {level === "8u" ? "8U" : "10U"}
+              {mode === "play" && position !== "any" ? ` · ${position}` : ""}
+            </div>
           </div>
           <button onClick={() => setScreen("menu")}
             style={{ background: "none", border: "none", color: "rgba(251,247,236,0.55)",
@@ -802,7 +953,7 @@ export default function App() {
             fits four answers in two columns rather than shrinking the field. */}
         <div style={{ position: "relative", height: "min(38vh, 260px)" }}>
           {fieldEl}
-          {result && <Stamp key={idx + "-" + String(picked)} ok={result.ok} />}
+          {result && <Stamp key={qnum + "-" + String(picked)} ok={result.ok} />}
         </div>
 
         {!result && <Legend />}

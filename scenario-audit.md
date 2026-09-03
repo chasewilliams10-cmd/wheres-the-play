@@ -29,92 +29,134 @@ best, what else earns partial credit, and the reason shown to the player.
 
 | Runners | Outs | Best play | Also OK | Why |
 |---|---|---|---|---|
-| 1st | 0 | **2nd** | — | The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position. |
 | 2nd | 0 | **1st** | — | Nobody's on first, so the runner on second is NOT forced to third. Throw there and he just goes back. Take the out at first. |
-| 3rd | 0 | **1st** | — | The runner on third isn't forced. Show him the ball to freeze him, then throw to first for the sure out. |
+| 2nd+3rd | 0 | **1st** | — | First base is empty, so NEITHER runner is forced. The batter is the only one who has to run. |
+| 1st+3rd | 0 | **2nd** | — | The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position. |
 | 1st+2nd+3rd | 0 | **Home** | — | Bases loaded, nobody out. Home is a force, and home-to-first is still a double play — the only choice that gets both outs AND keeps the run off the board. |
-| 1st+2nd+3rd | 1 | **Home** | 2nd | Everybody's forced. Home then first ends the inning with nothing scoring. Second then first works too — when the last out is a force at first, no run counts. |
+| 1st+2nd | 0 | **2nd** | 3rd | Third is a force too, but from where you're standing the surest double play is second and then first. A double play beats one out at third. |
+| 1st | 0 | **2nd** | — | The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position. |
+| empty | 0 | **1st** | — | Nobody on base. The only runner forced to go anywhere is the batter. Throw to first. |
+| 1st | 1 | **2nd** | — | The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position. |
+| empty | 1 | **1st** | — | Nobody on base. The only runner forced to go anywhere is the batter. Throw to first. |
 | 1st+3rd | 1 | **2nd** | — | The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position. |
+| 1st+2nd+3rd | 1 | **Home** | 2nd | Everybody's forced. Home then first ends the inning with nothing scoring. Second then first works too — when the last out is a force at first, no run counts. |
 | 2nd | 1 | **1st** | — | Nobody's on first, so the runner on second is NOT forced to third. Throw there and he just goes back. Take the out at first. |
-| 1st+2nd | 1 | **2nd** | 3rd | Third is a force too, but from where you're standing the surest double play is second and then first. A double play beats one out at third. |
-| 1st | 2 | **1st** | 2nd | Two outs — any force ends the inning. Take the surest out you've got instead of chasing the lead runner. |
+| 2nd+3rd | 1 | **1st** | — | First base is empty, so NEITHER runner is forced. The batter is the only one who has to run. |
+| empty | 2 | **1st** | — | Empty bases, two outs. One throw ends it — set your feet and make it a good one. |
+| 2nd+3rd | 2 | **1st** | — | Two outs and no force anywhere but first. Make the throw and neither run counts. |
+| 1st+3rd | 2 | **1st** | 2nd | Two outs — any force ends the inning. Take the surest out you've got instead of chasing the lead runner. |
+| 1st+2nd | 2 | **1st** | 2nd, 3rd | Two outs — any force ends the inning. Take the surest out you've got instead of chasing the lead runner. |
 | 2nd | 2 | **1st** | — | Two outs. The batter is the only forced runner — get him and you're off the field. |
-| 3rd | 2 | **1st** | — | Two outs. Beat the batter to first and the run doesn't count, even if he crosses the plate first. |
 ### Ball hit to the catcher
 
 | Runners | Outs | Best play | Also OK | Why |
 |---|---|---|---|---|
-| 2nd | 0 | **1st** | — | Nobody's on first, so the runner on second is NOT forced to third. Throw there and he just goes back. Take the out at first. |
 | 1st | 0 | **2nd** | — | The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position. |
+| 2nd+3rd | 0 | **1st** | — | First base is empty, so NEITHER runner is forced. The batter is the only one who has to run. |
+| 1st+2nd | 0 | **3rd** | 2nd | Both lead runners are forced and the bag is right there. Step on third — no throw at all, and the runner closest to scoring is gone. |
 | 1st+3rd | 0 | **2nd** | — | The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position. |
+| empty | 0 | **1st** | — | Nobody on base. The only runner forced to go anywhere is the batter. Throw to first. |
+| 3rd | 0 | **1st** | — | The runner on third isn't forced. Show him the ball to freeze him, then throw to first for the sure out. |
 | 1st+2nd+3rd | 0 | **Home** | — | Bases loaded, nobody out. Home is a force, and home-to-first is still a double play — the only choice that gets both outs AND keeps the run off the board. |
-| 2nd | 1 | **1st** | — | Nobody's on first, so the runner on second is NOT forced to third. Throw there and he just goes back. Take the out at first. |
-| 1st+3rd | 1 | **2nd** | — | The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position. |
-| 1st+2nd+3rd | 1 | **Home** | — | Everybody's forced. Home then first ends the inning with nothing scoring. Second then first works too — when the last out is a force at first, no run counts. |
+| 1st+2nd | 1 | **3rd** | 2nd | Both lead runners are forced and the bag is right there. Step on third — no throw at all, and the runner closest to scoring is gone. |
+| 3rd | 1 | **1st** | — | The runner on third isn't forced. Show him the ball to freeze him, then throw to first for the sure out. |
 | 1st | 1 | **2nd** | — | The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position. |
-| 3rd | 2 | **1st** | — | Two outs. Beat the batter to first and the run doesn't count, even if he crosses the plate first. |
-| 2nd+3rd | 2 | **1st** | — | Two outs and no force anywhere but first. Make the throw and neither run counts. |
+| 1st+2nd+3rd | 1 | **Home** | — | Everybody's forced. Home then first ends the inning with nothing scoring. Second then first works too — when the last out is a force at first, no run counts. |
+| 2nd+3rd | 1 | **1st** | — | First base is empty, so NEITHER runner is forced. The batter is the only one who has to run. |
+| 1st+3rd | 1 | **2nd** | — | The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position. |
+| 1st+2nd+3rd | 2 | **Home** | 1st, 2nd, 3rd | Two outs, bases loaded, and you're standing on a force bag. Step on the plate. |
 | empty | 2 | **1st** | — | Empty bases, two outs. One throw ends it — set your feet and make it a good one. |
+| 2nd | 2 | **1st** | — | Two outs. The batter is the only forced runner — get him and you're off the field. |
+| 1st+2nd | 2 | **1st** | 2nd, 3rd | Two outs — any force ends the inning. Take the surest out you've got instead of chasing the lead runner. |
+| 3rd | 2 | **1st** | — | Two outs. Beat the batter to first and the run doesn't count, even if he crosses the plate first. |
 ### Ball hit to the first baseman
 
 | Runners | Outs | Best play | Also OK | Why |
 |---|---|---|---|---|
-| 1st+2nd | 0 | **2nd** | — | Third is a force too, but from where you're standing the surest double play is second and then first. A double play beats one out at third. |
-| 3rd | 0 | **1st** | — | The runner on third isn't forced. Show him the ball to freeze him, then throw to first for the sure out. |
+| 2nd+3rd | 0 | **1st** | — | First base is empty, so NEITHER runner is forced. The batter is the only one who has to run. |
+| empty | 0 | **1st** | — | Nobody on base. The only runner forced to go anywhere is the batter. Throw to first. |
 | 1st+2nd+3rd | 0 | **Home** | — | Bases loaded, nobody out. Home is a force, and home-to-first is still a double play — the only choice that gets both outs AND keeps the run off the board. |
+| 2nd | 0 | **1st** | — | Nobody's on first, so the runner on second is NOT forced to third. Throw there and he just goes back. Take the out at first. |
 | 1st+3rd | 0 | **2nd** | — | The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position. |
-| 1st+2nd | 1 | **2nd** | — | Third is a force too, but from where you're standing the surest double play is second and then first. A double play beats one out at third. |
+| 1st | 0 | **2nd** | — | The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position. |
+| 1st+2nd | 0 | **2nd** | — | Third is a force too, but from where you're standing the surest double play is second and then first. A double play beats one out at third. |
 | 2nd | 1 | **1st** | — | Nobody's on first, so the runner on second is NOT forced to third. Throw there and he just goes back. Take the out at first. |
-| 1st+3rd | 1 | **2nd** | — | The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position. |
+| 1st+2nd | 1 | **2nd** | — | Third is a force too, but from where you're standing the surest double play is second and then first. A double play beats one out at third. |
+| empty | 1 | **1st** | — | Nobody on base. The only runner forced to go anywhere is the batter. Throw to first. |
 | 3rd | 1 | **1st** | — | The runner on third isn't forced. Show him the ball to freeze him, then throw to first for the sure out. |
+| 1st | 1 | **2nd** | — | The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position. |
+| 1st+2nd+3rd | 1 | **Home** | 2nd | Everybody's forced. Home then first ends the inning with nothing scoring. Second then first works too — when the last out is a force at first, no run counts. |
 | empty | 2 | **1st** | — | Two outs. Don't throw it anywhere — step on the bag yourself and walk off. |
 | 1st+2nd | 2 | **1st** | 2nd, 3rd | Two outs. Don't throw it anywhere — step on the bag yourself and walk off. |
-| 1st+3rd | 2 | **1st** | 2nd | Two outs. Don't throw it anywhere — step on the bag yourself and walk off. |
+| 2nd+3rd | 2 | **1st** | — | Two outs. Don't throw it anywhere — step on the bag yourself and walk off. |
+| 3rd | 2 | **1st** | — | Two outs. Don't throw it anywhere — step on the bag yourself and walk off. |
+| 2nd | 2 | **1st** | — | Two outs. Don't throw it anywhere — step on the bag yourself and walk off. |
 ### Ball hit to the second baseman
 
 | Runners | Outs | Best play | Also OK | Why |
 |---|---|---|---|---|
-| 1st+2nd+3rd | 0 | **Home** | — | Bases loaded, nobody out. Home is a force, and home-to-first is still a double play — the only choice that gets both outs AND keeps the run off the board. |
 | 1st+2nd | 0 | **2nd** | — | Third is a force too, but from where you're standing the surest double play is second and then first. A double play beats one out at third. |
-| 2nd+3rd | 0 | **1st** | — | First base is empty, so NEITHER runner is forced. The batter is the only one who has to run. |
+| 2nd | 0 | **1st** | — | Nobody's on first, so the runner on second is NOT forced to third. Throw there and he just goes back. Take the out at first. |
+| empty | 0 | **1st** | — | Nobody on base. The only runner forced to go anywhere is the batter. Throw to first. |
 | 1st+3rd | 0 | **2nd** | — | The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position. |
-| empty | 1 | **1st** | — | Nobody on base. The only runner forced to go anywhere is the batter. Throw to first. |
-| 1st+3rd | 1 | **2nd** | — | The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position. |
+| 1st | 0 | **2nd** | — | The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position. |
+| 1st+2nd+3rd | 0 | **Home** | — | Bases loaded, nobody out. Home is a force, and home-to-first is still a double play — the only choice that gets both outs AND keeps the run off the board. |
+| 2nd+3rd | 0 | **1st** | — | First base is empty, so NEITHER runner is forced. The batter is the only one who has to run. |
 | 3rd | 1 | **1st** | — | The runner on third isn't forced. Show him the ball to freeze him, then throw to first for the sure out. |
+| 1st+3rd | 1 | **2nd** | — | The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position. |
+| 1st | 1 | **2nd** | — | The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position. |
+| 1st+2nd+3rd | 1 | **Home** | 2nd | Everybody's forced. Home then first ends the inning with nothing scoring. Second then first works too — when the last out is a force at first, no run counts. |
 | 1st+2nd | 1 | **2nd** | — | Third is a force too, but from where you're standing the surest double play is second and then first. A double play beats one out at third. |
-| 2nd+3rd | 2 | **1st** | — | Two outs and no force anywhere but first. Make the throw and neither run counts. |
-| 1st+2nd+3rd | 2 | **1st** | 2nd, 3rd, Home | Two outs — any force ends the inning. Take the surest out you've got instead of chasing the lead runner. |
+| empty | 1 | **1st** | — | Nobody on base. The only runner forced to go anywhere is the batter. Throw to first. |
+| 1st+3rd | 2 | **1st** | 2nd | Two outs — any force ends the inning. Take the surest out you've got instead of chasing the lead runner. |
+| empty | 2 | **1st** | — | Empty bases, two outs. One throw ends it — set your feet and make it a good one. |
 | 3rd | 2 | **1st** | — | Two outs. Beat the batter to first and the run doesn't count, even if he crosses the plate first. |
+| 1st+2nd+3rd | 2 | **1st** | 2nd, 3rd, Home | Two outs — any force ends the inning. Take the surest out you've got instead of chasing the lead runner. |
+| 2nd+3rd | 2 | **1st** | — | Two outs and no force anywhere but first. Make the throw and neither run counts. |
 ### Ball hit to the shortstop
 
 | Runners | Outs | Best play | Also OK | Why |
 |---|---|---|---|---|
-| 2nd+3rd | 0 | **1st** | — | First base is empty, so NEITHER runner is forced. The batter is the only one who has to run. |
+| 3rd | 0 | **1st** | — | The runner on third isn't forced. Show him the ball to freeze him, then throw to first for the sure out. |
 | 1st+3rd | 0 | **2nd** | — | The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position. |
-| 1st | 0 | **2nd** | — | The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position. |
 | 1st+2nd+3rd | 0 | **Home** | — | Bases loaded, nobody out. Home is a force, and home-to-first is still a double play — the only choice that gets both outs AND keeps the run off the board. |
+| 2nd | 0 | **1st** | — | Nobody's on first, so the runner on second is NOT forced to third. Throw there and he just goes back. Take the out at first. |
+| 1st+2nd | 0 | **2nd** | 3rd | Third is a force too, but from where you're standing the surest double play is second and then first. A double play beats one out at third. |
+| empty | 0 | **1st** | — | Nobody on base. The only runner forced to go anywhere is the batter. Throw to first. |
+| 1st | 0 | **2nd** | — | The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position. |
+| 1st | 1 | **2nd** | — | The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position. |
+| empty | 1 | **1st** | — | Nobody on base. The only runner forced to go anywhere is the batter. Throw to first. |
 | 1st+3rd | 1 | **2nd** | — | The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position. |
-| 1st+2nd+3rd | 1 | **Home** | 2nd | Everybody's forced. Home then first ends the inning with nothing scoring. Second then first works too — when the last out is a force at first, no run counts. |
 | 1st+2nd | 1 | **2nd** | 3rd | Third is a force too, but from where you're standing the surest double play is second and then first. A double play beats one out at third. |
-| 2nd | 1 | **1st** | — | Nobody's on first, so the runner on second is NOT forced to third. Throw there and he just goes back. Take the out at first. |
+| 1st+2nd+3rd | 1 | **Home** | 2nd | Everybody's forced. Home then first ends the inning with nothing scoring. Second then first works too — when the last out is a force at first, no run counts. |
+| 3rd | 1 | **1st** | — | The runner on third isn't forced. Show him the ball to freeze him, then throw to first for the sure out. |
+| empty | 2 | **1st** | — | Empty bases, two outs. One throw ends it — set your feet and make it a good one. |
 | 2nd+3rd | 2 | **1st** | — | Two outs and no force anywhere but first. Make the throw and neither run counts. |
 | 1st+2nd | 2 | **1st** | 2nd, 3rd | Two outs — any force ends the inning. Take the surest out you've got instead of chasing the lead runner. |
-| empty | 2 | **1st** | — | Empty bases, two outs. One throw ends it — set your feet and make it a good one. |
+| 1st | 2 | **1st** | 2nd | Two outs — any force ends the inning. Take the surest out you've got instead of chasing the lead runner. |
+| 1st+3rd | 2 | **1st** | 2nd | Two outs — any force ends the inning. Take the surest out you've got instead of chasing the lead runner. |
 ### Ball hit to the third baseman
 
 | Runners | Outs | Best play | Also OK | Why |
 |---|---|---|---|---|
-| 1st | 0 | **2nd** | — | The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position. |
-| 1st+2nd | 0 | **3rd** | 2nd | Both lead runners are forced and the bag is right there. Step on third — no throw at all, and the runner closest to scoring is gone. |
 | 1st+2nd+3rd | 0 | **Home** | — | Bases loaded, nobody out. Home is a force, and home-to-first is still a double play — the only choice that gets both outs AND keeps the run off the board. |
-| 2nd | 0 | **1st** | — | Nobody's on first, so the runner on second is NOT forced to third. Throw there and he just goes back. Take the out at first. |
-| 1st+2nd | 1 | **3rd** | 2nd | Both lead runners are forced and the bag is right there. Step on third — no throw at all, and the runner closest to scoring is gone. |
-| 1st+2nd+3rd | 1 | **Home** | 2nd | Everybody's forced. Home then first ends the inning with nothing scoring. Second then first works too — when the last out is a force at first, no run counts. |
+| 2nd+3rd | 0 | **1st** | — | First base is empty, so NEITHER runner is forced. The batter is the only one who has to run. |
+| 1st | 0 | **2nd** | — | The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position. |
+| 3rd | 0 | **1st** | — | The runner on third isn't forced. Show him the ball to freeze him, then throw to first for the sure out. |
+| 1st+3rd | 0 | **2nd** | — | The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position. |
+| empty | 0 | **1st** | — | Nobody on base. The only runner forced to go anywhere is the batter. Throw to first. |
+| 1st+2nd | 0 | **3rd** | 2nd | Both lead runners are forced and the bag is right there. Step on third — no throw at all, and the runner closest to scoring is gone. |
 | 2nd+3rd | 1 | **1st** | — | First base is empty, so NEITHER runner is forced. The batter is the only one who has to run. |
 | 1st+3rd | 1 | **2nd** | — | The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position. |
-| 1st+3rd | 2 | **1st** | 2nd | Two outs — any force ends the inning. Take the surest out you've got instead of chasing the lead runner. |
+| 2nd | 1 | **1st** | — | Nobody's on first, so the runner on second is NOT forced to third. Throw there and he just goes back. Take the out at first. |
+| 1st | 1 | **2nd** | — | The runner on first HAS to go, so second is a force — and it starts the double play. Taking the batter at first gets one out and leaves the lead runner in scoring position. |
+| 1st+2nd | 1 | **3rd** | 2nd | Both lead runners are forced and the bag is right there. Step on third — no throw at all, and the runner closest to scoring is gone. |
+| 1st+2nd+3rd | 1 | **Home** | 2nd | Everybody's forced. Home then first ends the inning with nothing scoring. Second then first works too — when the last out is a force at first, no run counts. |
+| empty | 2 | **1st** | — | Empty bases, two outs. One throw ends it — set your feet and make it a good one. |
+| 1st+2nd | 2 | **3rd** | 1st, 2nd | Two outs and a force bag is right under your foot. Don't throw it — step on third and the inning's over. |
+| 2nd+3rd | 2 | **1st** | — | Two outs and no force anywhere but first. Make the throw and neither run counts. |
 | 2nd | 2 | **1st** | — | Two outs. The batter is the only forced runner — get him and you're off the field. |
-| 1st+2nd+3rd | 2 | **3rd** | 1st, 2nd, Home | Two outs and a force bag is right under your foot. Don't throw it — step on third and the inning's over. |
+| 1st | 2 | **1st** | 2nd | Two outs — any force ends the inning. Take the surest out you've got instead of chasing the lead runner. |
 
 ---
 
@@ -181,20 +223,6 @@ runner, so first base is a force.
 | Base hit over the shortstop into left field. Who is the cutoff man for a throw to third? | **Shortstop** | The shortstop goes out to meet the throw. The third baseman has to stay home on his bag or there's nobody to catch it. |
 
 ---
-
-## Rules the whole bank is checked against
-
-Every situation is validated automatically against these. Any that fails is a bug.
-
-1. Every answer must be a legal force.
-2. A force at base X requires the bag behind X to be occupied.
-3. Under two outs you're never told to take the batter when a lead force exists.
-4. A force at third only goes to a fielder standing at the bag; everyone else turns two.
-5. Bases loaded under two outs, the play is home — nothing anywhere points elsewhere.
-6. With nobody out, a choice that concedes a run earns no partial credit.
-7. Wording that mentions two outs only appears when two outs are lit.
-8. On a ground ball a runner advances one base. A throw to third with second empty,
-   or home with third empty, needs a base hit — it can't come off a grounder.
 
 ## Known judgment calls
 

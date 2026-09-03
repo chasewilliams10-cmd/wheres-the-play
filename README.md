@@ -79,7 +79,7 @@ keep seeing the old version.
 
 All the baseball lives in three arrays at the top of `src/App.jsx`:
 
-- `PLAY` — where's the play (66 situations: every out/base combination for
+- `PLAY` — where's the play (108 situations: every out/base combination for
   each of the six infield positions)
 - `FORCE` — force or tag (30 situations: ground balls, steals, pickoffs,
   and dropped third strikes)

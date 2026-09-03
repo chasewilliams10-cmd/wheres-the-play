@@ -138,10 +138,10 @@ runner, so first base is a force.
 | Ground ball. (runners: 1st+2nd+3rd) | Home | **Force — step on the bag** | Bases loaded is the only time home plate is a force. Every runner has someone right behind him. |
 | Ground ball. (runners: 1st+3rd) | Home | **Tag him** | Second base is empty, so the runner on third isn't being pushed anywhere. Tag him. |
 | Ground ball. (runners: 1st+3rd) | 2nd | **Force — step on the bag** | The batter running to first forces the runner on first to go. Second is live. |
-| Ground ball. (runners: 1st+3rd) | 3rd | **Tag him** | Second base is empty, so the runner on first isn't forced past second. Nobody has to reach third — tag him. |
+| Base hit into right field and the runner from first digs for third. (runners: 1st+3rd) | 3rd | **Tag him** | Second base was empty, so he was only ever forced as far as second. Going to third is his own choice — tag him. |
 | Ground ball. (runners: 2nd) | 1st | **Force — step on the bag** | Doesn't matter who else is on. The batter has to run, so first base is always a force. |
-| Ground ball. (runners: 2nd) | Home | **Tag him** | One runner, and nobody behind him. He's running because he chose to. Tag him at the plate. |
-| Ground ball. (runners: 1st+2nd) | Home | **Tag him** | Third base is empty, so nobody is forced to score. The runner from second is going on his own — tag him. |
+| Base hit to the outfield and the runner on second is being waved home. (runners: 2nd) | Home | **Tag him** | First base was empty, so nobody was ever pushing him. He's running because the coach sent him. Tag him at the plate. |
+| Base hit into the gap and the runner from second is being sent home. (runners: 1st+2nd) | Home | **Tag him** | He was forced as far as third and no further — third base was empty behind him. Nothing forces him to the plate, so tag him. |
 | Two outs. Ground ball with the bases loaded. (runners: 1st+2nd+3rd) | 3rd | **Force — step on the bag** | Loaded bases means every base is a force, third included. Two outs, so any of them ends it — step on the bag. |
 | Ground ball. (runners: 1st) | 1st | **Force — step on the bag** | The batter is forced to first every single time. Step on the bag, no tag needed. |
 | The runner on first leads off and breaks for second. (runners: 1st) | 2nd | **Tag him** | Nobody hit the ball, so the batter never ran. If the batter isn't running, nothing is forced. A steal is a tag every single time. |
@@ -181,6 +181,20 @@ runner, so first base is a force.
 | Base hit over the shortstop into left field. Who is the cutoff man for a throw to third? | **Shortstop** | The shortstop goes out to meet the throw. The third baseman has to stay home on his bag or there's nobody to catch it. |
 
 ---
+
+## Rules the whole bank is checked against
+
+Every situation is validated automatically against these. Any that fails is a bug.
+
+1. Every answer must be a legal force.
+2. A force at base X requires the bag behind X to be occupied.
+3. Under two outs you're never told to take the batter when a lead force exists.
+4. A force at third only goes to a fielder standing at the bag; everyone else turns two.
+5. Bases loaded under two outs, the play is home — nothing anywhere points elsewhere.
+6. With nobody out, a choice that concedes a run earns no partial credit.
+7. Wording that mentions two outs only appears when two outs are lit.
+8. On a ground ball a runner advances one base. A throw to third with second empty,
+   or home with third empty, needs a base hit — it can't come off a grounder.
 
 ## Known judgment calls
 

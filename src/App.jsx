@@ -204,13 +204,16 @@ const FORCE = [
   { bases: ["first", "third"], base: "second", force: true,
     why: "The batter running to first forces the runner on first to go. Second is live." },
   { bases: ["first", "third"], base: "third", force: false,
-    why: "Second base is empty, so the runner on first isn't forced past second. Nobody has to reach third — tag him." },
+    lead: "Base hit into right field and the runner from first digs for third.",
+    why: "Second base was empty, so he was only ever forced as far as second. Going to third is his own choice — tag him." },
   { bases: ["second"], base: "first", force: true,
     why: "Doesn't matter who else is on. The batter has to run, so first base is always a force." },
   { bases: ["second"], base: "home", force: false,
-    why: "One runner, and nobody behind him. He's running because he chose to. Tag him at the plate." },
+    lead: "Base hit to the outfield and the runner on second is being waved home.",
+    why: "First base was empty, so nobody was ever pushing him. He's running because the coach sent him. Tag him at the plate." },
   { bases: ["first", "second"], base: "home", force: false,
-    why: "Third base is empty, so nobody is forced to score. The runner from second is going on his own — tag him." },
+    lead: "Base hit into the gap and the runner from second is being sent home.",
+    why: "He was forced as far as third and no further — third base was empty behind him. Nothing forces him to the plate, so tag him." },
   { bases: ["first", "second", "third"], base: "third", force: true, outs: 2,
     lead: "Two outs. Ground ball with the bases loaded.",
     why: "Loaded bases means every base is a force, third included. Two outs, so any of them ends it — step on the bag." },
@@ -558,7 +561,7 @@ const MODES = {
   force: { title: "Force or Tag?", blurb: "Bag or tag?", bank: FORCE },
   cover: { title: "Who Covers?", blurb: "Everybody has a job on every pitch. Know yours.", bank: COVER },
 };
-const BUILD = "build 3";   // bump this and CACHE in public/sw.js on every deploy
+const BUILD = "build 4";   // bump this and CACHE in public/sw.js on every deploy
 const INNINGS = 3;
 const MERCY = 10; // runs allowed before we call it
 const POSITIONS = ["any", "P", "C", "1B", "2B", "SS", "3B"];

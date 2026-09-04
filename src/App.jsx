@@ -371,10 +371,10 @@ const COVER = [
     bases: ["first"], spot: [200, 306],
     options: ["Center fielder", "Pitcher", "Left fielder", "Third baseman"], answer: 0,
     why: "The center fielder charges in behind the bag. If it skips through, he keeps the runner from getting third." },
-  { q: "Fly ball to left field, runner tagging from third. Who is the cutoff man for the throw home?",
-    bases: ["third"], ball: "LF",
-    options: ["Third baseman", "Shortstop", "Pitcher", "First baseman"], answer: 0,
-    why: "On throws home from left field, the third baseman lines up as the cutoff. From center or right, it's the first baseman." },
+  { q: "Fly ball to center field, runner tagging from third. Who is the cutoff man for the throw home?",
+    bases: ["third"], ball: "CF",
+    options: ["First baseman", "Shortstop", "Pitcher", "Third baseman"], answer: 0,
+    why: "From center or right, the first baseman is the cutoff — he's the one on that side of the field. Left field is the exception: that one goes to the third baseman." },
   { q: "Base hit to right field and the runner rounds second heading for third. Who covers third?",
     bases: ["second"], ball: "RF",
     options: ["Third baseman", "Shortstop", "Pitcher", "Catcher"], answer: 0,
@@ -391,7 +391,7 @@ const COVER = [
     bases: ["third"], spot: [224, 324],
     options: ["Pitcher", "First baseman", "Third baseman", "Shortstop"], answer: 0,
     why: "The catcher is chasing the ball, so the pitcher sprints in to cover the plate and take the throw." },
-  { kidPitch: true, q: "Runner on second takes off for third as the pitch is released. Who covers third base?",
+  { kidPitch: true, q: "Runner on second takes off for third. Who covers third base?",
     bases: ["second"], spot: [200, 306],
     options: ["Third baseman", "Shortstop", "Pitcher", "Left fielder"], answer: 0,
     why: "The third baseman stays on his own bag for a steal. He's the closest man and he already knows where the bag is without looking." },
@@ -399,18 +399,26 @@ const COVER = [
     bases: ["first"], spot: [200, 306],
     options: ["Backing up third base", "Covering second base", "Covering home", "Still on the mound"], answer: 0,
     why: "If the throw gets away, that runner is going to third. The pitcher's job on every steal is to get behind third and keep him from scoring." },
-  { kidPitch: true, q: "Runner on second breaks for third on the pitch. Who backs up the throw to third?",
+  { kidPitch: true, q: "Runner on second breaks for third. Which outfielder backs up the throw to third?",
     bases: ["second"], spot: [200, 306],
-    options: ["Left fielder", "Center fielder", "Pitcher", "Second baseman"], answer: 0,
-    why: "Left field is directly behind third. He charges in so an overthrow doesn't turn into a run." },
+    options: ["Left fielder", "Center fielder", "Right fielder", "Nobody — the pitcher has it"], answer: 0,
+    why: "Left field is directly behind third, so he charges in. The pitcher gets over there too, but the outfielder is the one deep enough to stop an overthrow from turning into a run." },
   { q: "Ground ball to the second baseman with nobody on base. Who covers first?",
     bases: [], ball: "2B",
     options: ["First baseman", "Pitcher", "Shortstop", "Catcher"], answer: 0,
     why: "He's already standing there. The pitcher only comes over when the ball pulls the first baseman off the bag." },
-  { q: "Base hit over the shortstop into left field. Who is the cutoff man for a throw to third?",
-    bases: [], ball: "LF",
+  { q: "Runner on first. Base hit into left field and he's rounding second for third. Who is the cutoff man for the throw to third?",
+    bases: ["first"], ball: "LF",
     options: ["Shortstop", "Second baseman", "Pitcher", "Third baseman"], answer: 0,
-    why: "The shortstop goes out to meet the throw. The third baseman has to stay home on his bag or there's nobody to catch it." },
+    why: "The shortstop goes out toward left to meet the throw. The third baseman has to stay home on his bag or there's nobody there to catch it." },
+  { q: "Fly ball to left field, runner tagging from third. Who is the cutoff man for the throw home?",
+    bases: ["third"], ball: "LF",
+    options: ["Third baseman", "First baseman", "Shortstop", "Pitcher"], answer: 0,
+    why: "From left field it's the third baseman — he's already on that side of the diamond and the throw comes right down his line. From center or right it's the first baseman instead." },
+  { q: "Fly ball to left field, runner tagging from third, and the third baseman goes out to cut the throw. Who covers third base?",
+    bases: ["third"], ball: "LF",
+    options: ["Shortstop", "Second baseman", "Pitcher", "Catcher"], answer: 0,
+    why: "Somebody always has to be on the bag. When the third baseman leaves to be the cutoff, the shortstop slides over and takes his place." },
 ];
 
 /* ------------------------------------------------------------------
@@ -645,7 +653,7 @@ const MODES = {
   force: { title: "Force or Tag?", blurb: "Bag or tag?", bank: FORCE },
   cover: { title: "Who Covers?", blurb: "Everybody has a job on every pitch. Know yours.", bank: COVER },
 };
-const BUILD = "build 5";   // bump this and CACHE in public/sw.js on every deploy
+const BUILD = "build 7";   // bump this and CACHE in public/sw.js on every deploy
 const INNINGS = 3;
 const MERCY = 8;  // runs allowed before we call it
 const POSITIONS = ["any", "P", "C", "1B", "2B", "SS", "3B"];

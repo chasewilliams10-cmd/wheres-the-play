@@ -202,7 +202,7 @@ runner, so first base is a force.
 
 ---
 
-## Who Covers — 15 situations
+## Who Covers — 17 situations
 
 | Question | Answer | Why |
 |---|---|---|
@@ -211,16 +211,18 @@ runner, so first base is a force.
 | Ground ball pulls the first baseman way off the bag. Who covers first? | **Pitcher** | The pitcher breaks toward first on every ball hit to the right side. Run in a curve so you hit the bag square. |
 | Bunt right in front of the plate. The catcher fields it. Who covers first base? | **Second baseman** | The first baseman charged in for the bunt, so the second baseman sprints over to take the throw. |
 | Runner on first takes off to steal. Who backs up the throw in case it gets past second? | **Center fielder** | The center fielder charges in behind the bag. If it skips through, he keeps the runner from getting third. |
-| Fly ball to left field, runner tagging from third. Who is the cutoff man for the throw home? | **Third baseman** | On throws home from left field, the third baseman lines up as the cutoff. From center or right, it's the first baseman. |
+| Fly ball to center field, runner tagging from third. Who is the cutoff man for the throw home? | **First baseman** | From center or right, the first baseman is the cutoff — he's the one on that side of the field. Left field is the exception: that one goes to the third baseman. |
 | Base hit to right field and the runner rounds second heading for third. Who covers third? | **Third baseman** | The third baseman stays home on his bag. The shortstop goes out to be the relay man. |
 | Pop fly floating between the shortstop and the third baseman. Who should call for it? | **Shortstop** | The shortstop has more range and a better angle moving to his left. He calls it loud and everyone else clears out. |
 | Pop fly between the second baseman and the right fielder. Who has priority? | **Right fielder** | An outfielder running in always beats an infielder running out. He can see the whole play in front of him. |
 | Pitch gets past the catcher with a runner on third. Who covers home plate? | **Pitcher** | The catcher is chasing the ball, so the pitcher sprints in to cover the plate and take the throw. |
-| Runner on second takes off for third as the pitch is released. Who covers third base? | **Third baseman** | The third baseman stays on his own bag for a steal. He's the closest man and he already knows where the bag is without looking. |
+| Runner on second takes off for third. Who covers third base? | **Third baseman** | The third baseman stays on his own bag for a steal. He's the closest man and he already knows where the bag is without looking. |
 | Runner steals second and the catcher's throw skips past the bag. Where should the pitcher be? | **Backing up third base** | If the throw gets away, that runner is going to third. The pitcher's job on every steal is to get behind third and keep him from scoring. |
-| Runner on second breaks for third on the pitch. Who backs up the throw to third? | **Left fielder** | Left field is directly behind third. He charges in so an overthrow doesn't turn into a run. |
+| Runner on second breaks for third. Which outfielder backs up the throw to third? | **Left fielder** | Left field is directly behind third, so he charges in. The pitcher gets over there too, but the outfielder is the one deep enough to stop an overthrow from turning into a run. |
 | Ground ball to the second baseman with nobody on base. Who covers first? | **First baseman** | He's already standing there. The pitcher only comes over when the ball pulls the first baseman off the bag. |
-| Base hit over the shortstop into left field. Who is the cutoff man for a throw to third? | **Shortstop** | The shortstop goes out to meet the throw. The third baseman has to stay home on his bag or there's nobody to catch it. |
+| Runner on first. Base hit into left field and he's rounding second for third. Who is the cutoff man for the throw to third? | **Shortstop** | The shortstop goes out toward left to meet the throw. The third baseman has to stay home on his bag or there's nobody there to catch it. |
+| Fly ball to left field, runner tagging from third. Who is the cutoff man for the throw home? | **Third baseman** | From left field it's the third baseman — he's already on that side of the diamond and the throw comes right down his line. From center or right it's the first baseman instead. |
+| Fly ball to left field, runner tagging from third, and the third baseman goes out to cut the throw. Who covers third base? | **Shortstop** | Somebody always has to be on the bag. When the third baseman leaves to be the cutoff, the shortstop slides over and takes his place. |
 
 ---
 

@@ -83,7 +83,7 @@ All the baseball lives in three arrays at the top of `src/App.jsx`:
   each of the six infield positions)
 - `FORCE` — force or tag (30 situations: ground balls, steals, pickoffs,
   and dropped third strikes)
-- `COVER` — who covers (15 situations)
+- `COVER` — who covers (17 situations)
 
 Adding a scenario means adding one object to the right array. Nothing else to
 touch. The rules of thumb the answers follow:

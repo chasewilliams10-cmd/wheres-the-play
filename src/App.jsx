@@ -732,24 +732,6 @@ export default function App() {
   const [picked, setPicked] = useState(null);
   const [result, setResult] = useState(null);
   const [records, setRecords] = useState({});
-  const [copied, setCopied] = useState(false);
-  const copyEmail = async () => {
-    let ok = false;
-    try { await navigator.clipboard.writeText(FEEDBACK_TO); ok = true; }
-    catch {
-      // Older browsers, and sandboxes that block the clipboard API
-      try {
-        const ta = document.createElement("textarea");
-        ta.value = FEEDBACK_TO;
-        ta.style.position = "fixed"; ta.style.opacity = "0";
-        document.body.appendChild(ta);
-        ta.select();
-        ok = document.execCommand("copy");
-        document.body.removeChild(ta);
-      } catch { /* the address is on screen either way */ }
-    }
-    if (ok) { setCopied(true); setTimeout(() => setCopied(false), 2000); }
-  };
 
   const usedRef = useRef(new Set());   // scenarios already served this game
   const lastRef = useRef(null);        // the one just shown, so it can never repeat back to back
@@ -939,10 +921,6 @@ export default function App() {
             ))}
           </div>
 
-          {/* The address is shown as plain text on purpose. A mailto link does
-              nothing on a phone with no mail app set up, and it's blocked
-              outright inside a sandboxed preview — so the address itself is
-              always readable and copyable no matter what. */}
           <div style={{ marginTop: 24, padding: "14px 12px", borderRadius: 10,
                         border: "1px solid rgba(251,247,236,0.18)", textAlign: "center" }}>
             <div style={{ fontSize: 13, fontWeight: 700, color: "rgba(251,247,236,0.7)" }}>
@@ -952,18 +930,9 @@ export default function App() {
                    `Where's the Play — feedback (${BUILD})`)}`}
                style={{ display: "inline-block", marginTop: 7, color: C.bulb,
                         fontFamily: F.body, fontSize: 15, fontWeight: 700,
-                        wordBreak: "break-all", userSelect: "all" }}>
+                        wordBreak: "break-all" }}>
               {FEEDBACK_TO}
             </a>
-            <button onClick={copyEmail}
-              style={{ display: "block", width: "100%", marginTop: 10,
-                       background: copied ? C.safe : "transparent",
-                       color: copied ? C.night : "rgba(251,247,236,0.75)",
-                       border: `1px solid ${copied ? C.safe : "rgba(251,247,236,0.22)"}`,
-                       borderRadius: 8, padding: "9px 8px", cursor: "pointer",
-                       fontFamily: F.body, fontSize: 13, fontWeight: 700 }}>
-              {copied ? "Copied" : "Copy address"}
-            </button>
           </div>
 
           <div style={{ textAlign: "center", marginTop: 14, fontSize: 11,

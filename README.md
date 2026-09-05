@@ -58,6 +58,12 @@ Open the URL on your phone and confirm:
 
     npm install      # once
     npm run dev      # live preview at localhost:5173
+    npm test         # checks every scenario for a legal answer, no dupes, etc.
+
+Run `npm test` after editing `PLAY`, `FORCE`, or `COVER` in `src/App.jsx` — it
+checks every scenario's answer against the actual force rule (not just that
+it looks reasonable), catches duplicate situations, and checks `COVER`
+answers are marked correctly in source. See `tests/scenarios.test.js`.
 
 To publish a change, commit and push. Vercel redeploys automatically.
 

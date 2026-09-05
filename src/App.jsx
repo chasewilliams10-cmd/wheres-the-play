@@ -36,7 +36,7 @@ const C = {
    SCENARIO BANK — "Where's the play"
    answer = best play. alsoOk = defensible, gets partial credit.
 ------------------------------------------------------------------ */
-const PLAY = [
+export const PLAY = [
   // ---- P ----
   { bases: ["second"], outs: 0, f: "P", answer: "first",
     why: "Nobody's on first, so the runner on second is NOT forced to third. Throw there and he just goes back. Take the out at first." },
@@ -264,7 +264,7 @@ const PLAY = [
 /* ------------------------------------------------------------------
    SCENARIO BANK — "Force or tag"
 ------------------------------------------------------------------ */
-const FORCE = [
+export const FORCE = [
   { bases: ["first"], base: "second", force: true,
     why: "The batter is running to first, so the runner on first has to leave. Nowhere to go back to — that's a force." },
   { bases: [], base: "first", force: true,
@@ -350,7 +350,7 @@ const FORCE = [
 /* ------------------------------------------------------------------
    SCENARIO BANK — "Who covers"
 ------------------------------------------------------------------ */
-const COVER = [
+export const COVER = [
   { q: "Ground ball to the shortstop. Runner on first. Who covers second base?",
     bases: ["first"], ball: "SS",
     options: ["Second baseman", "Pitcher", "Third baseman", "Catcher"], answer: 0,
@@ -433,7 +433,7 @@ const BASE_XY = {
 // Fielders sit where they actually play: corner infielders a few steps off
 // their own bag toward second and BEHIND the baseline, not between home and
 // the bag (that's bunt coverage, not a starting position).
-const FIELDER_XY = {
+export const FIELDER_XY = {
   P: [200, 192], C: [200, 316],
   "1B": [272, 162], "2B": [246, 132],
   SS: [154, 132], "3B": [128, 162],
@@ -648,7 +648,7 @@ function Scoreboard({ inning, outs, runs, streak }) {
 /* ------------------------------------------------------------------
    APP
 ------------------------------------------------------------------ */
-const MODES = {
+export const MODES = {
   play: { title: "Where's the Play?", blurb: "A ball is hit to you. Where does it go?", bank: PLAY },
   force: { title: "Force or Tag?", blurb: "Bag or tag?", bank: FORCE },
   cover: { title: "Who Covers?", blurb: "Everybody has a job on every pitch. Know yours.", bank: COVER },
@@ -662,7 +662,7 @@ const LEVELS = { "8u": "8U Coach Pitch", "10u": "10U Kid Pitch" };
 
 // Coach pitch has no leadoffs, no steals and no dropped third strikes, so
 // anything tagged kidPitch is filtered out at 8U.
-function buildDeck(m, level, position) {
+export function buildDeck(m, level, position) {
   let bank = MODES[m].bank;
   if (level === "8u") bank = bank.filter((s) => !s.kidPitch);
   if (m === "play" && position !== "any") {
@@ -679,6 +679,41 @@ function buildDeck(m, level, position) {
     });
   }
   return shuffle(bank);
+}
+
+/* Pure so it's unit-testable outside React: pick the next scenario matching
+   outsNow, never repeating within the current out-count bucket until every
+   scenario in it has been shown, and never showing the same one twice in a
+   row. `used`/`last` are read-only in, and returned (possibly new) in the
+   result — App() is responsible for writing them back into its refs. */
+export function pickScenario(deck, outsNow, used, last) {
+  const eligible = [];
+  deck.forEach((s, i) => { if (s.outs === undefined || s.outs === outsNow) eligible.push(i); });
+  if (!eligible.length) return { index: null, scenario: null, used };
+  let pool = eligible.filter((i) => !used.has(i));
+  let nextUsed = used;
+  if (!pool.length) {
+    // This out count has run out of fresh scenarios. Clear the history for
+    // THIS bucket only — wiping the whole set would put scenarios from the
+    // other out counts back in play before the player had seen them all.
+    nextUsed = new Set(used);
+    eligible.forEach((i) => nextUsed.delete(i));
+    pool = eligible.filter((i) => i !== last);   // never twice in a row
+    if (!pool.length) pool = eligible;
+  }
+  const i = pool[Math.floor(Math.random() * pool.length)];
+  const usedOut = new Set(nextUsed);
+  usedOut.add(i);
+  return { index: i, scenario: deck[i], used: usedOut };
+}
+
+/* Pure: only overwrite a best score when the new run is a strict
+   improvement. Returns the SAME object (by reference) when nothing should
+   change, so callers can skip the state update and localStorage write. */
+export function nextBestScores(records, key, runs) {
+  const prev = records[key];
+  if (prev !== undefined && prev <= runs) return records;
+  return { ...records, [key]: runs };
 }
 
 export default function App() {
@@ -744,9 +779,8 @@ export default function App() {
   const remember = (k, v) => { try { localStorage.setItem(k, v); } catch { /* ignore */ } };
 
   const saveRecord = useCallback((key, r) => {
-    const prev = records[key];
-    if (prev !== undefined && prev <= r) return;
-    const next = { ...records, [key]: r };
+    const next = nextBestScores(records, key, r);
+    if (next === records) return;
     setRecords(next);
     try { localStorage.setItem("wtp.bestScores", JSON.stringify(next)); } catch { /* ignore */ }
   }, [records]);
@@ -756,22 +790,9 @@ export default function App() {
      field; the rest fit any count. This is what keeps a prompt from saying
      "two outs" while the board shows none. */
   const drawFor = useCallback((d, outsNow) => {
-    const eligible = [];
-    d.forEach((s, i) => { if (s.outs === undefined || s.outs === outsNow) eligible.push(i); });
-    if (!eligible.length) return null;
-    let pool = eligible.filter((i) => !usedRef.current.has(i));
-    if (!pool.length) {
-      // This out count has run out of fresh scenarios. Clear the history for
-      // THIS bucket only — wiping the whole set would put scenarios from the
-      // other out counts back in play before the player had seen them all.
-      eligible.forEach((i) => usedRef.current.delete(i));
-      pool = eligible.filter((i) => i !== lastRef.current);   // never twice in a row
-      if (!pool.length) pool = eligible;
-    }
-    const i = pool[Math.floor(Math.random() * pool.length)];
-    usedRef.current.add(i);
-    lastRef.current = i;
-    return d[i];
+    const { index, scenario, used } = pickScenario(d, outsNow, usedRef.current, lastRef.current);
+    if (index !== null) { usedRef.current = used; lastRef.current = index; }
+    return scenario;
   }, []);
 
   const start = (m) => {

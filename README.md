@@ -7,9 +7,14 @@ run score.
 
 Built for a league that allows leadoffs, steals, and the dropped third strike.
 
-No accounts, no server, no data leaves the device. Best scores live in the
-browser's own storage. That's deliberate — collecting anything about a player
-under 13 pulls COPPA into the picture, and there's no reason to.
+No accounts, no logins, and nothing identifying is ever collected. Best
+scores live in the browser's own storage. That's deliberate — collecting
+anything about a player under 13 pulls COPPA into the picture, and there's
+no reason to.
+
+The one exception is anonymous, aggregate visit counts (via Vercel Web
+Analytics) — no cookies, no personal data, no cross-site tracking, just how
+many people are opening the app.
 
 ---
 
